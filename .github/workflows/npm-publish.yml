@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
-      # Trusted publishing (OIDC) needs npm >= 11.5.1; Node 22 ships npm 10
-      - run: npm install -g npm@^11.5.1
+      # npm stage needs npm >= 11.15.0 (trusted publishing needs >= 11.5.1); Node 22 ships npm 10
+      - run: npm install -g npm@^11.15.0
       - name: Verify tag == package.json version and pick dist-tag
         id: meta
         run: |
@@ -31,10 +31,26 @@ jobs:
             TOP=$(printf '%s\n%s\n' "$LATEST" "$PKG" | sort -V | tail -1)
             if [ "$TOP" = "$PKG" ]; then DIST=latest; else DIST="v${PKG%%.*}-lts"; fi
           fi
-          echo "dist=$DIST" >> "$GITHUB_OUTPUT"
+          printf 'dist=%s\nname=%s\nversion=%s\n' "$DIST" "$NAME" "$PKG" >> "$GITHUB_OUTPUT"
       - run: yarn install --immutable
       - run: yarn build
-      # npm tries OIDC first and falls back to NODE_AUTH_TOKEN when no trusted publisher is configured
-      - run: npm publish --access public --tag "${{ steps.meta.outputs.dist }}"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # The trusted publisher only allows staging (OIDC, no token fallback); the owner approves each release with 2FA
+      - name: Stage release
+        id: stage
+        run: |
+          OUT=$(npm stage publish --access public --tag "${{ steps.meta.outputs.dist }}" --json)
+          echo "$OUT"
+          echo "id=$(node -p "JSON.parse(process.argv[1])[process.argv[2]]?.stageId ?? ''" "$OUT" "${{ steps.meta.outputs.name }}")" >> "$GITHUB_OUTPUT"
+      - name: Write approval steps to the job summary
+        run: |
+          ID="${{ steps.stage.outputs.id }}"
+          {
+            echo "### Staged ${{ steps.meta.outputs.name }}@${{ steps.meta.outputs.version }}"
+            echo "- Dist-tag on approval: \`${{ steps.meta.outputs.dist }}\`"
+            if [ -n "$ID" ]; then
+              echo "- Stage id: \`$ID\`"
+              echo "- Approve: \`npm stage approve $ID\`"
+            else
+              echo "- Find the stage id with \`npm stage list ${{ steps.meta.outputs.name }}\`, then run \`npm stage approve <id>\`"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
