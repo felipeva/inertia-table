@@ -147,7 +147,7 @@ abstract class TableResource
     /**
      * @template T of Model
      *
-     * @param  string|EloquentBuilder<T>|Relation<T>|QueryBuilder  $subject
+     * @param  string|EloquentBuilder<T>|Relation<T, Model, mixed>|QueryBuilder  $subject
      */
     protected function builder(QueryBuilder|Relation|EloquentBuilder|string $subject, ?Request $request = null): QueryBuilder
     {

@@ -3,7 +3,6 @@
 namespace FelipeVa\InertiaTable;
 
 use FelipeVa\InertiaTable\Commands\MakeTableResourceCommand;
-use Illuminate\Support\Enumerable;
 use Inertia\Response;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -29,12 +28,11 @@ class InertiaTableServiceProvider extends PackageServiceProvider
         Response::macro('tables', function (array $tables): Response {
             $response = $this;
 
-            /** @var Enumerable<int, Table> $tables */
+            /** @var array<int, Table> $tables */
             $tablesCollection = collect($tables);
 
             $tablesCollection->each(fn (Table $table) => $table->build($response));
 
-            /** @phpstan-ignore-next-line */
             return $response;
         });
     }

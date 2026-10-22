@@ -1,0 +1,25 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property FelipeVa\\InertiaTable\\Contracts\\TableComponent\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Table.php
+
+		-
+			message: '#^Access to an undefined property T of FelipeVa\\InertiaTable\\Contracts\\TableComponent\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Table.php
+
+		-
+			message: '#^Call to an undefined method Inertia\\Response\:\:getTableProps\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table.php
+
+		-
+			message: '#^Method FelipeVa\\InertiaTable\\Table\:\:addComponent\(\) should return Illuminate\\Support\\Collection\<int, T of FelipeVa\\InertiaTable\\Contracts\\TableComponent\> but returns Illuminate\\Support\\Collection\<int, FelipeVa\\InertiaTable\\Contracts\\TableComponent\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Table.php
