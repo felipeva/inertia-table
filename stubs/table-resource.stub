@@ -9,10 +9,9 @@ class {{ class }} extends TableResource
 {
     protected function query(): QueryBuilder
     {
-        return $this->builder()
+        return $this->builder(/* TODO: Model::class */)
             ->defaultSort('-created_at')
-            ->allowedFilters([])
-            ->allowedSorts([]);
+            ->allowedSorts('created_at');
     }
 
     /**
