@@ -28,8 +28,7 @@ class Filter extends Data implements TableComponent
 
         public FilterType $type = FilterType::SELECT,
         public ?string $value = null,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $options
@@ -37,7 +36,7 @@ class Filter extends Data implements TableComponent
      */
     public function options(array $options): self
     {
-        $this->options = FilterOption::collection($options);
+        $this->options = FilterOption::collect($options, DataCollection::class);
 
         return $this;
     }

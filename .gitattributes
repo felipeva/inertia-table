@@ -17,3 +17,11 @@
 /UPGRADING.md       export-ignore
 /phpstan.neon.dist  export-ignore
 /phpstan-baseline.neon  export-ignore
+/js                 export-ignore
+/.yarn              export-ignore
+/.yarnrc.yml        export-ignore
+/package.json       export-ignore
+/yarn.lock          export-ignore
+/vite.config.ts     export-ignore
+/tsconfig.json      export-ignore
+/.prettierrc.json   export-ignore

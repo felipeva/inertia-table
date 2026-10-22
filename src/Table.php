@@ -18,8 +18,6 @@ class Table
 
     private string $pageName = 'page';
 
-    private string $defaultSort = '';
-
     /**
      * @var int[]
      */
@@ -207,8 +205,8 @@ class Table
             'filters' => $this->transformFilters(),
             'searches' => $this->transformSearches(),
             'cursor' => $this->query('cursor'),
-            'sort' => $this->query('sort', $this->defaultSort),
-            'defaultSort' => $this->defaultSort,
+            'sort' => $this->query('sort', $this->defaultSortColumn),
+            'defaultSort' => $this->defaultSortColumn,
             'page' => Paginator::resolveCurrentPage($this->pageName),
             'perPage' => $this->query('per_page', $this->perPage),
             'pageName' => $this->pageName,

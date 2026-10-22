@@ -12,6 +12,5 @@ class FilterOption extends Data
     public function __construct(
         public string $value,
         public string $label,
-    ) {
-    }
+    ) {}
 }
