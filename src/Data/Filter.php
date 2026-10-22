@@ -37,7 +37,7 @@ class Filter extends Data implements TableComponent
      */
     public function options(array $options): self
     {
-        $this->options = FilterOption::collection($options);
+        $this->options = FilterOption::collect($options, DataCollection::class);
 
         return $this;
     }
