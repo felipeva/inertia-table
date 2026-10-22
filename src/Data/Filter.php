@@ -28,8 +28,7 @@ class Filter extends Data implements TableComponent
 
         public FilterType $type = FilterType::SELECT,
         public ?string $value = null,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $options

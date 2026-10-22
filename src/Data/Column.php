@@ -19,8 +19,7 @@ class Column extends Data implements TableComponent
         public bool|string $sorted = false,
         public bool $hidden = false,
         public bool $sortable = false,
-    ) {
-    }
+    ) {}
 
     public function sortable(bool $value = true): self
     {
